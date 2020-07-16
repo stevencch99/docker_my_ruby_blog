@@ -1,0 +1,13 @@
+<h1 style="color:red;"><%= @title %></h1>
+<% if @posts.each do |post| %>
+  <div class="post">
+    <h2 class="title"><%= link_to post.title, post %></h2>
+    <div class="entry"><%= post.body %></div>
+    <div class="byline">
+      <p class="meta">May 07, 2012 Posted by <a href="#">Someone</a></p>
+      <p class="links"><a href="post.html">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" title="b0x w">Comments</a></p>
+    </div>
+  </div>
+<% end.empty? %>
+  <p style="color:white;">There are no posts in this category.</p>
+<% end %>

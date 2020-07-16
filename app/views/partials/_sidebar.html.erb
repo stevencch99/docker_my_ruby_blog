@@ -1,0 +1,37 @@
+<div id="sidebar">
+  <ul>
+    <li>
+      <div id="search">
+        <%= search_form_for @search do |f| %>
+          <%= f.search_field :title_or_body_cont %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+      <div style="clear: both;">&nbsp;</div>
+    </li>
+    <li>
+      <h2>Get The Framework</h2>
+      <p>You can download Ruby and/or Ruby on Rails for free right now
+        <br />
+        <a style="color:#D93544;" href="https://rubyonrails.org/" target="blank">READ OFFICIAL WEBSITE</a>
+      </p>
+    </li>
+    <li>
+      <h2>Categories</h2>
+      <ul>
+        <% all_categories.each do |category| %>
+          <li><%= link_to category.name, category_path(id: category.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li>
+      <h2>Recent Posts</h2>
+      <ul>
+        <% recent_posts.each do |post| %>
+          <li><%= link_to post.title, post_path(id: post.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!-- end #sidebar -->
