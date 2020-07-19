@@ -5,4 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+if Rails.env.development?
+  user = AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password', name: 'Default user')
+  category = Category.create!(name: 'Docker')
+  Post.create!(admin_user: user, category: category, title: 'Welcome to Docker Study Group!', body: 'This is the first day of our Docker Study Group!')
+end
