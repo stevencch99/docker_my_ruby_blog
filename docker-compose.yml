@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    # entrypoint: ["/app/lib/docker-entrypoint.sh"]
+    command: bash -c "rails db:migrate assets:precompile && foreman start -f Procfile"
+    volumes:
+      - '.:/app'
+    ports:
+      - '5000:5000'
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db/postgres
+    depends_on:
+      - db
+
