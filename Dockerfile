@@ -6,7 +6,7 @@ MAINTAINER Steven Chang <stevencch99@gmail.com>
 
 COPY ./files/etc/apt/apt.conf /etc/apt/apt.conf
 
-ENV RAILS_ENV=production http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128 SECRET_KEY_BASE=123
+ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim ghostscript postgis imagemagick nodejs npm
 
@@ -38,6 +38,7 @@ EXPOSE 3000
 # The main command to run when the container starts. Also
 # tell the Rails dev server to bind to all interfaces by
 # default.
+ENV RAILS_ENV=production SECRET_KEY_BASE=123 DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 CMD rails db:setup
 CMD rails webpacker:install
 CMD rails assets:precompile
