@@ -1,4 +1,4 @@
-FROM ruby:2.7.0
+FROM ruby:2.7.0-alpine
 MAINTAINER Steven Chang <stevencch99@gmail.com>
 
 # replace shell with bash so we can source files
@@ -13,7 +13,7 @@ ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
 # RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim ghostscript postgis imagemagick nodejs npm
 # try to update
 # RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client 
+RUN apk update -qq && apk add --update --no-cache build-base nodejs postgresql-dev git
 
 RUN mkdir -p /app
 WORKDIR /app

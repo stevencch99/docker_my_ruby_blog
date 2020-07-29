@@ -1,0 +1,36 @@
+.git
+.gitignore
+README.md
+
+# OS X
+.DS_Store
+
+# Rails
+log
+tmp
+db/*.sqlite3
+db/*.sqlite3-journal
+public/system
+coverage/
+spec/tmp
+**.orig
+.bundle
+.ruby-version
+.ruby-gemset
+.rvmrc
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
