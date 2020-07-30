@@ -34,7 +34,7 @@ COPY . /app
 EXPOSE 3000
 
 # consider to change the settings of rails db:setup and related DISABLE_DATABASE_ENVIRONMENT_CHECK virable
-ENV RAILS_ENV=production SECRET_KEY_BASE=123 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOUT=true
+ENV RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOUT=true
 
 # The main command to run when the container starts. Also
 # tell the Rails dev server to bind to all interfaces by

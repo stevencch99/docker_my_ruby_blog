@@ -22,7 +22,7 @@ services:
       - '3000:3000'
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db/postgres
-      # - SECRET_KEY_BASE=123456
+      - SECRET_KEY_BASE=123456
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_LOG_TO_STDOUT=true
     depends_on:
