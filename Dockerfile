@@ -1,18 +1,14 @@
 FROM ruby:2.7.0-alpine
 MAINTAINER Steven Chang <stevencch99@gmail.com>
 
-# replace shell with bash so we can source files
-# RUN rm /bin/sh && ln -s /bin/bash bin/sh
-
 # copy the proxy setting for the apt tool
-COPY ./files/etc/apt/apt.conf /etc/apt/apt.conf
+# opt 1.
+# COPY ./files/etc/apt/apt.conf /etc/apt/apt.conf
+# opt 2.
+# RUN echo 'Acquire::http::Proxy "http://172.19.8.10:3128";' > /etc/apt/apt.conf
 
 ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
 
-# original
-# RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim ghostscript postgis imagemagick nodejs npm
-# try to update
-# RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs vim
 RUN apk -U upgrade --no-cache && apk add build-base nodejs npm postgresql-dev git
 
 RUN mkdir -p /app
@@ -30,10 +26,8 @@ RUN bundle install --without development test --verbose
 COPY . /app
 # RUN ["chmod", "+x", "/app/docker-entrypoint.sh"] # omitted this line by commit the file locally
 
-# Expose port 3000 to the Docker host, so we can access it from outside.
 EXPOSE 3000
 
-# consider to change the settings of rails db:setup and related DISABLE_DATABASE_ENVIRONMENT_CHECK virable
 ENV RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOUT=true
 
 # The main command to run when the container starts. Also
@@ -44,9 +38,5 @@ ENV RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOU
 # docker-compose run app rails db:setup
 # docker-compose run app rails webpacker:install
 # docker-compose run app rails assets:precompile
-# CMD rails db:setup
-# CMD rails webpacker:install
-# CMD rails assets:precompile
-# CMD rails db:migrate assets:precompile && puma -C config/puma.rb 
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
