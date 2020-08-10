@@ -7,7 +7,7 @@ MAINTAINER Steven Chang <stevencch99@gmail.com>
 # opt 2.
 # RUN echo 'Acquire::http::Proxy "http://172.19.8.10:3128";' > /etc/apt/apt.conf
 
-ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
+ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128 DATABASE_HOST=my_db
 
 RUN apk -U upgrade --no-cache && apk add build-base nodejs npm postgresql-dev git
 
