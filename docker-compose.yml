@@ -3,18 +3,14 @@ services:
   db:
     image: postgres
     environment:
-      - "POSTGRES_USER=postgres"
-      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=popo"
+      - "POSTGRES_PASSWORD=yoyoyo"
     ports:
       - "5433:5433"
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
     build: .
-    # entrypoint: ["/app/docker-entrypoint.sh"]
-    # command: bash -c "rails db:migrate assets:precompile && foreman start -f Procfile"
-    # command: bash -c "rm -f tmp/pids/server.id && rails db:setup assets:precompile && foreman start -f Procfile"
-    # command: bash -c "rm -f /app/tmp/pids/server.id && rails db:setup && rails assets:precompile && rails s"
     command: sh -c "rm -f /app/tmp/pids/server.id && rails s"
     volumes:
       - '.:/app'
@@ -22,7 +18,7 @@ services:
       - '3000:3000'
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db/postgres
-      - SECRET_KEY_BASE=123456
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_LOG_TO_STDOUT=true
     depends_on:
