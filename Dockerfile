@@ -23,7 +23,7 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock package.json yarn.lock ./
 RUN bundle install --without development test --verbose
 
-# RUN npm install -g yarn && yarn install --check-files
+RUN npm install -g yarn && yarn install --check-files
 
 COPY . /app
 # RUN ["chmod", "+x", "/app/docker-entrypoint.sh"] # omitted this line by commit the file locally
