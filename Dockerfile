@@ -1,7 +1,7 @@
 FROM ruby:2.7.0-alpine
 LABEL Steven Chang <stevencch99@gmail.com>
 
-# copy the proxy setting for the apt tool
+# Proxy for Ubuntu: copy the proxy setting for the apt tool
 # opt 1.
 # COPY ./files/etc/apt/apt.conf /etc/apt/apt.conf
 # opt 2.
@@ -32,9 +32,5 @@ EXPOSE 3000
 
 ENV RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOUT=true
 
-# ==== these lines might be replaced by the command like:
-# docker-compose run app rails db:setup
-# docker-compose run app rails webpacker:install
-# docker-compose run app rails assets:precompile
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
