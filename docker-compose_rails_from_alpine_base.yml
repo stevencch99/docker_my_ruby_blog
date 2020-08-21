@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: popo
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+  web:
+    build:
+      context: .
+    depends_on:
+      - db
+    environment:
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_ENV: production
+      SECRET_KEY_BASE:
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:

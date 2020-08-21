@@ -1,0 +1,38 @@
+# Image for building
+FROM ruby:2.7.0-alpine AS build
+
+ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
+RUN apk -U upgrade --no-cache \
+    && apk add build-base yarn postgresql-dev git \
+    && rm -rf /var/lib/apt/lists/* 
+
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock package.json yarn.lock ./
+RUN bundle install --deployment --without development test --jobs 4 && \
+    yarn install
+
+COPY . /app
+RUN bundle exec rake assets:precompile && \
+    rm -rf /usr/local/bundle/cache tmp/cache node_modules && \
+    find /usr/local/bundle/gmes/ -name "*.c" -delete && \
+    find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Image for deployment
+FROM ruby:2.7.0-alpine AS deploy
+LABEL maintainer="Steven C."
+
+RUN apk update && \
+    apk add postgresql-client
+
+WORKDIR /app
+# WIP COPY from bundle and bin directory
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /app /app 
+
+
+ENV http_proxy=http://172.19.8.10:3128 https_proxy=http://172.19.8.10:3128
+ENV RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_LOG_TO_STDOUT=true
+EXPOSE 3000
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+
