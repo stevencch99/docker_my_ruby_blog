@@ -14,7 +14,7 @@ gem 'devise', '~> 4.7.2'
 # Use ransack for search functionalities
 gem 'ransack', github: 'activerecord-hackery/ransack'
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
